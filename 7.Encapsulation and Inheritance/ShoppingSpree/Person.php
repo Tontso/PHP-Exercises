@@ -57,7 +57,10 @@ class Person
     {
         $this->products[] = $product;
     }
-
+	
+	/**
+     * @param Product $product
+     */
     public function buyProduct(Product $product): void
     {
         if($this->haveEnoughMoney($product->getCost())){

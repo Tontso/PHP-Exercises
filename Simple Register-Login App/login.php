@@ -1,23 +1,31 @@
 <?php
 
-use Data\Users\UserDTO;
 use Repositories\Users\UserRepository;
 use Services\Encryption\ArgonEncryptionService;
 use Services\Users\UserService;
 
-require_once 'index.php';
+require_once 'common.php';
 
-$username = readline();
-$password = readline();
+$error = '';
+if(isset($_POST['login'])){
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
 
-$userService = new UserService(
-    new UserRepository($db),
-    new ArgonEncryptionService()
-);
+    $userService = new UserService(
+        new UserRepository($db),
+        new ArgonEncryptionService()
+    );
 
-if($userService->verifyCredentials($username, $password)){
-    echo "You are loggined";
-} else {
-    echo "NOOOOOO you can't login!";
+    if($userService->verifyCredentials($username, $password)){
+        $user = $userService->findByUsername($username);
+        // echo "MY USER IS:" . var_dump($user) . "</br>";
+        echo var_dump($user);
+        $_SESSION['id'] = $user->getId();
+        header("Location: profile.php");
+    } else {
+        $error = "Invalid Username or Password! Try again!";
+    }
 }
+
+require_once 'views/users/login.php';

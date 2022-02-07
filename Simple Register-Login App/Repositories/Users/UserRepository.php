@@ -18,7 +18,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function getAllUsers(): \Generator
     {
-        return $this->db->query("SELECT * FROM users")->execute()->fetch();   
+        return $this->db->query("SELECT * FROM users")->execute()->fetch(UserDTO::class);   
     }
 
 
@@ -32,11 +32,31 @@ class UserRepository implements UserRepositoryInterface
     public function getUserByName(string $username): UserDTO
     {
         $user = $this->db->query("SELECT * FROM users WHERE username = ?")
-            ->execute([$username])->fetch();
+            ->execute([$username])->fetch(UserDTO::class);
         
         $user = $user->current();
+
+        $tmpUser = new UserDTO();
+        $tmpUser->setId($user->getId());
+        $tmpUser->setUsername($user->getUsername());
+        $tmpUser->setPassword($user->getPassword());
+        $tmpUser->setConfirmPassword('');
+
+        return $tmpUser;
+    }
+
+    public function getUserById(int $id): UserDTO{
+        $user = $this->db->query("SELECT * FROM users WHERE id = ?")
+            ->execute([$id])->fetch(UserDTO::class);
         
-        return new UserDTO($user['username'], $user['password'], '');
+        $user = $user->current();
+        $tmpUser = new UserDTO();
+        $tmpUser->setId($user->getId());
+        $tmpUser->setUsername($user->getUsername());
+        $tmpUser->setPassword($user->getPassword());
+        $tmpUser->setConfirmPassword('');
+
+        return $tmpUser;
     }
     
 }

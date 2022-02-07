@@ -11,25 +11,11 @@ class StatementDatabase implements StatementInterface
     {   
         $this->pdoStatement = $pdoStatement;
     }
-    
- 
-    public function execute(array $param = []): StatementInterface
+
+    public function execute(array $param = []): ResultInterface
     {
         $this->pdoStatement->execute($param);
-        
-        return $this;
+        return new ResultDatabase($this->pdoStatement);
     }
     
-
-    public function fetch(): \Generator
-    {
-        $row = $this->pdoStatement->fetch(\PDO::FETCH_ASSOC);
-        while(false !== $row){
-            yield $row;
-            $row = $this->pdoStatement->fetch(\PDO::FETCH_ASSOC);
-        }
-
-        return $row;
-    }
-
 }

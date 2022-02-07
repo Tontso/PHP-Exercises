@@ -4,16 +4,11 @@ namespace Data\Users;
 
 class UserDTO
 {
+    private $id;
     private $username;
     private $password;
     private $confirmPassword;
 
-    public function __construct(string $username, string $password, string $confirmPassword)
-    {
-        $this->setUsername($username);
-        $this->password = $password;
-        $this->confirmPassword = $confirmPassword;
-    }
 
     public function getUsername(): string
     {
@@ -43,5 +38,15 @@ class UserDTO
     public function setConfirmPassword($confirmPassword): void
     {
         $this->confirmPassword = $confirmPassword;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 }

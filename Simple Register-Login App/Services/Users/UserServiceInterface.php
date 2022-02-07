@@ -8,7 +8,7 @@ interface UserServiceInterface
 {
     /**
      * @param UserDTO $userDTO
-     * @throws \Exception
+     * @throws RegistrationException
      * @return mixted
      */
     public function register(UserDTO $userDTO);
@@ -20,4 +20,10 @@ interface UserServiceInterface
      * @return bool
      */
     public function verifyCredentials(string $username, string $password): bool;
+
+    public function findByUsername(string $username): UserDTO;
+    
+    public function findById(int $id): UserDTO;
+
+    public function edit(int $id, UserDTO $userDTO): void;
 }

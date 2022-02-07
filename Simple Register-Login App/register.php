@@ -1,25 +1,39 @@
 <?php
 
 use Data\Users\UserDTO;
+use Exception\User\RegistrationException;
 use Repositories\Users\UserRepository;
 use Services\Encryption\ArgonEncryptionService;
 use Services\Users\UserService;
 
-require_once 'index.php';
+require_once 'common.php';
 
-$username = readline();
-$password = readline();
-$corfirmPassword = readline();
+$error = '';
 
-$userDTO = new UserDTO($username, $password, $corfirmPassword);
+if(isset($_POST['register'])){
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $corfirmPassword = $_POST['confirm'];
 
-$userService = new UserService(
-    new UserRepository($db),
-    new ArgonEncryptionService()
-);
+    $userDTO = new UserDTO();
+    $userDTO->setUsername($username);
+    $userDTO->setPassword($password);
+    $userDTO->setConfirmPassword($corfirmPassword);
 
-try{
-    $userService->register($userDTO);
-} catch (Exception $ex){
-    echo $ex->getMessage();
+    $userService = new UserService(
+        new UserRepository($db),
+        new ArgonEncryptionService()
+    );
+
+    try{
+        $userService->register($userDTO);
+        header("Location: login.php");
+        exit;
+    } catch (RegistrationException $ex){
+        $error = $ex->getMessage();
+    } catch (Exception $e){
+        $error = "Something went wrong.";
+    }
 }
+
+require_once 'views/users/register.php';

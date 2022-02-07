@@ -10,5 +10,7 @@ interface UserRepositoryInterface
     public function register(UserDTO $userDTO);
 
     public function getUserByName(string $username): UserDTO;
+
+    public function getUserById(int $id): UserDTO;
    
 }

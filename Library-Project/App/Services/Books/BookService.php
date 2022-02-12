@@ -30,9 +30,9 @@ class BookService implements BookServiceInterface
         return $this->bookRepository->insert($bookDTO);
     }
 
-    public function edit(BookDTO $bookDTO): bool
+    public function edit(int $id, BookDTO $bookDTO): bool
     {
-        return $this->bookRepository->update($bookDTO, $bookDTO->getId());
+        return $this->bookRepository->update($bookDTO, $id);
     }
 
     public function delete(int $id): bool

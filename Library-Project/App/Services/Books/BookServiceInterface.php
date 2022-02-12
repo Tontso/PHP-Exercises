@@ -8,7 +8,7 @@ interface BookServiceInterface
 {
     public function add(BookDTO $bookDTO): bool;
 
-    public function edit(BookDTO $bookDTO): bool;
+    public function edit(int $id, BookDTO $bookDTO): bool;
 
     public function delete(int $id): bool;
 

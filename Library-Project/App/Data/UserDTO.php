@@ -89,6 +89,11 @@ class UserDTO
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        return $this->id = $id;
+    }
+
     /**
      * Get the value of fullName
      */ 

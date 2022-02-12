@@ -1,3 +1,5 @@
+<?php
+
 <h2>Login</h2></br>
 <form method="POST">
     Username: <input type="text" name="username" /></br>

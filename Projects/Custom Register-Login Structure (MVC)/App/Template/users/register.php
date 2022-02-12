@@ -1,3 +1,4 @@
+<?php
 
 <h2>Register</h2></br>
 <form method="POST">

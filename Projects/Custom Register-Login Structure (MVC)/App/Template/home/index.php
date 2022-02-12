@@ -1,3 +1,5 @@
+<?php
+
 <h2>Hello, Guest!</h2>
 
 If you have an account, you can <a href="login.php">Login</a> to our system.
